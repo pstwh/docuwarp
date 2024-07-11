@@ -9,9 +9,7 @@ Docuwarp is a Python library for unwarping documents. It uses for inference the 
 To install Docuwarp, follow these steps:
 
 ```bash
-git clone https://github.com/pstwh/docuwarp
-cd docuwarp
-pip install -e .
+pip install docuwarp
 ```
 
 ## Usage
