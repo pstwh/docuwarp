@@ -1,6 +1,6 @@
-from typing import List, Tuple
-
 import os
+from typing import Tuple
+
 import numpy as np
 import onnxruntime as ort
 from PIL import Image
@@ -14,11 +14,11 @@ class Unwarp:
         ),
         sess_options=ort.SessionOptions(),
         providers=["CPUExecutionProvider"],
-        image_size: List[int] = [488, 712],
-        grid_size: List[int] = [45, 31],
+        image_size: Tuple[int, int] = (488, 712),
+        grid_size: Tuple[int, int] = (45, 31),
     ):
-        self.image_size = tuple(image_size)
-        self.grid_size = tuple(grid_size)
+        self.image_size = image_size
+        self.grid_size = grid_size
         self.session = ort.InferenceSession(
             model_path, sess_options=sess_options, providers=providers
         )
@@ -49,13 +49,13 @@ class Unwarp:
     def inference(self, image: Image.Image) -> Image.Image:
         resized_input, original_input, original_size = self.prepare_input(image)
 
-        points, _ = self.session.run(None, {"input": resized_input.astype(np.float32)})
+        points, _ = self.session.run(None, {"input": resized_input.astype(np.float16)})
 
         unwarped = self.bilinear_unwarping.run(
             None,
             {
                 "warped_img": original_input.astype(np.float32),
-                "point_positions": points,
+                "point_positions": points.astype(np.float32),
                 "img_size": np.array(original_size),
             },
         )[0][0]

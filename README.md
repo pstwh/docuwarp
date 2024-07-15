@@ -8,8 +8,20 @@ Docuwarp is a Python library for unwarping documents. It uses for inference the 
 
 To install Docuwarp, follow these steps:
 
+For cpu
+
 ```bash
-pip install docuwarp
+pip install "docuwarp[cpu]"
+```
+
+For cuda 11.X
+```bash
+pip install "docuwarp[gpu]"
+```
+
+For cuda 12.X
+```bash
+pip install "docuwarp[gpu]" --extra-index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/
 ```
 
 ## Usage
