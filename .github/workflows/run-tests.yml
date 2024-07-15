@@ -18,7 +18,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install -e .
+        pip install -e ".[cpu]"
         pip install pytest
 
     - name: Run tests
